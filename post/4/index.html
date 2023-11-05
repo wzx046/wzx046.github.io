@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>堆栈 | Star</title><meta name="keywords" content="C,数据结构,内存管理,单片机,堆栈"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="堆栈前言在理解堆(Heap)和栈(Stack)这两个概念时，需要放到具体的场景，因为在不同的场景下，堆和栈代表了两种不同的含义。  两种数据结构 内存管理方式  数据结构栈的定义栈(Stack): 只允许在一端进行插入或删除的线性表。栈顶(TOP): 线性表允许进行插入或删除的那一端。栈底(Bottom): 固定的，不允许进行插入或删除的另一端。空栈: 不含任何元素的空表。栈又称为后进先出（Las">
+<meta property="og:type" content="article">
+<meta property="og:title" content="堆栈">
+<meta property="og:url" content="http://wzx046.github.io/post/4/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="堆栈前言在理解堆(Heap)和栈(Stack)这两个概念时，需要放到具体的场景，因为在不同的场景下，堆和栈代表了两种不同的含义。  两种数据结构 内存管理方式  数据结构栈的定义栈(Stack): 只允许在一端进行插入或删除的线性表。栈顶(TOP): 线性表允许进行插入或删除的那一端。栈底(Bottom): 固定的，不允许进行插入或删除的另一端。空栈: 不含任何元素的空表。栈又称为后进先出（Las">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/6.jpg">
+<meta property="article:published_time" content="2022-09-19T12:14:35.000Z">
+<meta property="article:modified_time" content="2022-10-02T14:25:42.000Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="内存管理">
+<meta property="article:tag" content="单片机">
+<meta property="article:tag" content="堆栈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/6.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '堆栈',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-02 22:25:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">堆栈</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-19T12:14:35.000Z" title="发表于 2022-09-19 20:14:35">2022-09-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-02T14:25:42.000Z" title="更新于 2022-10-02 22:25:42">2022-10-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="堆栈"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在理解堆(Heap)和栈(Stack)这两个概念时，需要放到具体的场景，因为在不同的场景下，堆和栈代表了两种不同的含义。</p>
+<ul>
+<li>两种数据结构</li>
+<li>内存管理方式</li>
+</ul>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="栈的定义"><a href="#栈的定义" class="headerlink" title="栈的定义"></a>栈的定义</h3><p>栈(Stack): 只允许在一端进行插入或删除的线性表。<br>栈顶(TOP): 线性表允许进行插入或删除的那一端。<br>栈底(Bottom): 固定的，不允许进行插入或删除的另一端。<br>空栈: 不含任何元素的空表。<br><strong>栈又称为后进先出（Last In First Out）的线性表，简称LIFO结构</strong>  </p>
+<h3 id="栈的结构"><a href="#栈的结构" class="headerlink" title="栈的结构"></a>栈的结构</h3><pre><code class="C">#define MAXSIZE 50  // 栈中元素的最大个数
+typedef struct&#123;
+    int data[MAXSIZE];
+    int top;    //用于栈顶指针
+&#125;Stack;
+</code></pre>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><pre><code class="C">void InitStack(Stack *S)&#123;
+    S-&gt;top = -1;    //初始化栈顶指针
+&#125;
+</code></pre>
+<h3 id="判栈空"><a href="#判栈空" class="headerlink" title="判栈空"></a>判栈空</h3><pre><code class="C">bool StackEmpty(Stack S)&#123;
+    if(S.top == -1)&#123;    
+        return true;  // 栈空
+    &#125;else&#123;  
+        return false; // 非空
+    &#125;
+&#125;
+</code></pre>
+<h3 id="进栈push"><a href="#进栈push" class="headerlink" title="进栈push"></a>进栈push</h3><pre><code class="C">// 插入元素data为新的栈顶元素
+int Push(Stack* S, int data) &#123;
+    // 栈满
+    if (S-&gt;top == MAXSIZE - 1) &#123;
+        return 0;
+    &#125;
+    S-&gt;top++;   //栈顶指针增加一
+    S-&gt;data[S-&gt;top] = data;    //将新插入元素赋值给栈顶空间
+    return 1;
+&#125;
+</code></pre>
+<h3 id="出栈pop"><a href="#出栈pop" class="headerlink" title="出栈pop"></a>出栈pop</h3><pre><code class="C">// mydata为取出的栈顶元素
+int Pop(Stack* S, int* mydata) &#123;
+    if (S-&gt;top == -1) &#123;
+        return 0;
+    &#125;
+    *mydata = S-&gt;data[S-&gt;top];   //将要删除的栈顶元素赋值给e
+    S-&gt;top--;   //栈顶指针减一
+    return 1;
+&#125;
+</code></pre>
+<h3 id="读栈顶元素"><a href="#读栈顶元素" class="headerlink" title="读栈顶元素"></a>读栈顶元素</h3><pre><code class="C">// mydata为取出的栈顶元素
+int Pop(Stack* S, int* mydata) &#123;
+    if (S-&gt;top == -1) &#123;
+        return 0;
+    &#125;
+    *mydata = S-&gt;data[S-&gt;top];
+    S-&gt;top--;
+    return 1;
+&#125;
+</code></pre>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h3 id="程序数据分类"><a href="#程序数据分类" class="headerlink" title="程序数据分类"></a>程序数据分类</h3><p>Code：表示程序所占用 FLASH 的大小（FLASH）。<br>RO-data：即 Read Only-data，表示程序定义的常量，如 const 类型（FLASH）<br>RW-data：即 Read Write-data，表示已被初始化的全局变量（SRAM）<br>ZI-data：即 Zero Init-data，表示未被初始化的全局变量(SRAM)</p>
+<h3 id="堆区-HEAP"><a href="#堆区-HEAP" class="headerlink" title="堆区(HEAP)"></a>堆区(HEAP)</h3><p>一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收。在单片机的sram中的ZI-data中。由malloc 系列函数或new 操作符分配的内存。其生命周期由free 或delete 决定。在没有释放之前一直存在，直到程序结束。其特点是使用灵活，空间比较大，但容易出错。向上生长；</p>
+<h3 id="栈区-STACK"><a href="#栈区-STACK" class="headerlink" title="栈区(STACK)"></a>栈区(STACK)</h3><p>由编译器自动分配释放，在单片机的sram中的ZI-data。保存局部变量。栈上的内容只在函数的范围内存在，当函数运行结束，这些内容也会自动被销毁。其特点是效率高，但空间大小有限。由高地址向低地址生长。  </p>
+<h3 id="静态数据区（-data和-bss）"><a href="#静态数据区（-data和-bss）" class="headerlink" title="静态数据区（.data和.bss）"></a>静态数据区（.data和.bss）</h3><p>保存全局变量和 static 变量（包括static全局和局部变量）。全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域（.data）， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域（.bss），程序结束后由系统释放。这些数据也是可读可写的，和stack、heap一样，被包含在sram中。静态区的内容在总个程序的生命周期内都存在，由编译器在编译的时候分配。  </p>
+<h3 id="三种内存分配方式"><a href="#三种内存分配方式" class="headerlink" title="三种内存分配方式"></a>三种内存分配方式</h3><ol>
+<li>从静态存储区域分配。内存在程序编译的时候就已经分配好，这块内存在程序的整个运行期间都存在。 例如全局变量，static变量。  </li>
+<li>在栈上创建。在执行函数时，函数内局部变量的存储单元在栈上创建，函数执行结束时这些存储单元自动被释放。栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限。  </li>
+<li>从堆上分配，亦称动态内存分配。程序在运行的时候用malloc或new申请任意多少的内存，程序员自己负责在何时用free或delete释放内存。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/4/">http://wzx046.github.io/post/4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="post-meta__tags" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">内存管理</a><a class="post-meta__tags" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a><a class="post-meta__tags" href="/tags/%E5%A0%86%E6%A0%88/">堆栈</a></div><div class="post_share"><div class="social-share" data-image="/img/num/6.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/5/"><img class="prev-cover" src="/img/num/7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">队列</div></div></a></div><div class="next-post pull-right"><a href="/post/3/"><img class="next-cover" src="/img/num/5.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">hexo常用指令</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/16/" title="结构体--字节对齐&#x2F;位域"><img class="cover" src="/img/num/4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-22</div><div class="title">结构体--字节对齐&#x2F;位域</div></div></a></div><div><a href="/post/c5467981/" title="链表"><img class="cover" src="/img/num/1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-16</div><div class="title">链表</div></div></a></div><div><a href="/post/5/" title="队列"><img class="cover" src="/img/num/7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-19</div><div class="title">队列</div></div></a></div><div><a href="/post/31/" title="轨迹规划"><img class="cover" src="/img/num/5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-27</div><div class="title">轨迹规划</div></div></a></div><div><a href="/post/34/" title="仿真演示导弹击落飞行目标"><img class="cover" src="/img/num/1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-10</div><div class="title">仿真演示导弹击落飞行目标</div></div></a></div><div><a href="/post/36/" title="灰度投影法视频稳像"><img class="cover" src="/img/num/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-15</div><div class="title">灰度投影法视频稳像</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A0%86%E6%A0%88"><span class="toc-number">1.</span> <span class="toc-text">堆栈</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">栈的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.2.</span> <span class="toc-text">栈的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.2.3.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%A0%88%E7%A9%BA"><span class="toc-number">1.2.4.</span> <span class="toc-text">判栈空</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E6%A0%88push"><span class="toc-number">1.2.5.</span> <span class="toc-text">进栈push</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E6%A0%88pop"><span class="toc-number">1.2.6.</span> <span class="toc-text">出栈pop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E6%A0%88%E9%A1%B6%E5%85%83%E7%B4%A0"><span class="toc-number">1.2.7.</span> <span class="toc-text">读栈顶元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text">程序数据分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E5%8C%BA-HEAP"><span class="toc-number">1.3.2.</span> <span class="toc-text">堆区(HEAP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%8C%BA-STACK"><span class="toc-number">1.3.3.</span> <span class="toc-text">栈区(STACK)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%95%B0%E6%8D%AE%E5%8C%BA%EF%BC%88-data%E5%92%8C-bss%EF%BC%89"><span class="toc-number">1.3.4.</span> <span class="toc-text">静态数据区（.data和.bss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">三种内存分配方式</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/48/" title="Windows系统安装"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows系统安装"/></a><div class="content"><a class="title" href="/post/48/" title="Windows系统安装">Windows系统安装</a><time datetime="2023-10-09T09:33:23.000Z" title="发表于 2023-10-09 17:33:23">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/47/" title="删除U盘EFI分区"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="删除U盘EFI分区"/></a><div class="content"><a class="title" href="/post/47/" title="删除U盘EFI分区">删除U盘EFI分区</a><time datetime="2023-10-09T08:50:05.000Z" title="发表于 2023-10-09 16:50:05">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/46/" title="摄影入门"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影入门"/></a><div class="content"><a class="title" href="/post/46/" title="摄影入门">摄影入门</a><time datetime="2023-07-04T08:55:02.000Z" title="发表于 2023-07-04 16:55:02">2023-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/45/" title="电流检测电路(未完待续)"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="电流检测电路(未完待续)"/></a><div class="content"><a class="title" href="/post/45/" title="电流检测电路(未完待续)">电流检测电路(未完待续)</a><time datetime="2023-06-23T08:58:33.000Z" title="发表于 2023-06-23 16:58:33">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/44/" title="ESPIDF-WIFI系列（1）"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESPIDF-WIFI系列（1）"/></a><div class="content"><a class="title" href="/post/44/" title="ESPIDF-WIFI系列（1）">ESPIDF-WIFI系列（1）</a><time datetime="2023-06-14T07:56:20.000Z" title="发表于 2023-06-14 15:56:20">2023-06-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

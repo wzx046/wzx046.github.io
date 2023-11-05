@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>通信协议 | Star</title><meta name="keywords" content="通信协议,单片机"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="通信协议IIC概念IIC，一种串行数据总线，只有两根信号线，一根双向数据线SDA，一根时钟线SCL。数据线位宽为1bit，因而IIC传输数据时是一个bit一个bit来传输的。IIC的两根线上可以挂靠多个设备，我们把其中控制时钟线的设备叫做主设备，其他的是从设备。每个IIC设备都有个固话的地址，主设备根据此地址值来确定要通信的从设备。IIC只有两个信号线： 一条是双向的串行数据线SDA，一条是串行时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信协议">
+<meta property="og:url" content="http://wzx046.github.io/post/6/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="通信协议IIC概念IIC，一种串行数据总线，只有两根信号线，一根双向数据线SDA，一根时钟线SCL。数据线位宽为1bit，因而IIC传输数据时是一个bit一个bit来传输的。IIC的两根线上可以挂靠多个设备，我们把其中控制时钟线的设备叫做主设备，其他的是从设备。每个IIC设备都有个固话的地址，主设备根据此地址值来确定要通信的从设备。IIC只有两个信号线： 一条是双向的串行数据线SDA，一条是串行时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/1.jpg">
+<meta property="article:published_time" content="2022-09-22T12:37:26.000Z">
+<meta property="article:modified_time" content="2022-09-25T15:32:10.000Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="通信协议">
+<meta property="article:tag" content="单片机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '通信协议',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-25 23:32:10'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">通信协议</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-22T12:37:26.000Z" title="发表于 2022-09-22 20:37:26">2022-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-25T15:32:10.000Z" title="更新于 2022-09-25 23:32:10">2022-09-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="通信协议"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h1><h2 id="IIC"><a href="#IIC" class="headerlink" title="IIC"></a>IIC</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>IIC，一种串行数据总线，只有两根信号线，一根双向数据线SDA，一根时钟线SCL。数据线位宽为1bit，因而IIC传输数据时是一个bit一个bit来传输的。IIC的两根线上可以挂靠多个设备，我们把其中控制时钟线的设备叫做主设备，其他的是从设备。每个IIC设备都有个固话的地址，主设备根据此地址值来确定要通信的从设备。<br>IIC只有两个信号线： 一条是双向的串行数据线<strong>SDA</strong>，一条是串行时钟线<strong>SCL</strong>  </p>
+<ul>
+<li>SDA (Serial data) 是数据线，D代表Data也就是数据，Send Data 也就是用来传输数据的  </li>
+<li>SCL (Serial clock line) 是时钟线，C代表Clock 也就是时钟 也就是控制数据发送的时序的</li>
+</ul>
+<h3 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h3><p>IIC在传输数据过程中共有3种类型信号，开始信号、停止信号、ACK信号。  </p>
+<ul>
+<li>开始：SCL保持高电平，SDA由高到低，表明一个开始信号。</li>
+<li>停止：SCL保持高电平，SDA由低到高，表明一个停止信号。  </li>
+<li>ACK：单片机发完8bit数据后不再驱动总线，SDA和SCL的硬件设计都有上拉电阻，会把SDA变成高电平。在第8个bit，外接IIC设备接收到信号，就会在第9个bit把SDA拉低，处理器监测到SDA拉低就知道外接IIC设备数据已经收到。这个被拉低的bit被认为是一个ACK信号。</li>
+</ul>
+<h3 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h3><p>IIC信号在数据传输过程中，当SCL为高电平时，数据线SDA必须保持稳定状态，不允许有电平跳变，只有在SCL为低电平期间，数据线上的高电平或低电平状态才允许变化。<strong>SCL高电平时，数据线SDA的任何电平变换会看做是总线的起始信号或者停止信号。</strong></p>
+<h3 id="应答信号"><a href="#应答信号" class="headerlink" title="应答信号"></a>应答信号</h3><ul>
+<li>应答信号为低电平时，规定为有效应答位（ACK），表示接收器已经成功地接收了该字节。</li>
+<li>应答信号为高电平时，规定为非应答位（NACK），一般表示接收器接收该字节没有成功。</li>
+</ul>
+<h3 id="数据传送"><a href="#数据传送" class="headerlink" title="数据传送"></a>数据传送</h3><p>数据传送时，先传送最高位（MSB），每一个被传送的字节后面都必须跟随一位应答位（即一帧共有9位）。<strong>当一个字节按数据位从高位到低位的顺序传输完后，紧接着从设备将拉低SDA线，回传给主设备一个应答位ACK， 此时才认为一个字节真正的被传输完成</strong>，如果一段时间内没有收到从机的应答信号，则自动认为从机已正确接收到数据。<br>多数从设备的地址为7位或者10位，一般都用七位。<strong>八位设备地址&#x3D;7位从机地址+读&#x2F;写地址。</strong>  </p>
+<ul>
+<li>0表示主设备向从设备(write)写数据  </li>
+<li>1表示主设备向从设备(read)读数据</li>
+</ul>
+<h3 id="帧格式"><a href="#帧格式" class="headerlink" title="帧格式"></a>帧格式</h3><p>IIC的每一帧数据由9bit组成  </p>
+<ul>
+<li>发送数据：8bit数据 + 1bit ACK  </li>
+<li>设备地址数据：8bit数据为7bit设备地址 + 1bit方向</li>
+</ul>
+<h3 id="主机向从机写数据"><a href="#主机向从机写数据" class="headerlink" title="主机向从机写数据"></a>主机向从机写数据</h3><ol>
+<li>主机首先产生START信号  </li>
+<li>然后紧跟着发送一个从机地址，这个地址共有7位，紧接着的第8位是数据方 向位(R&#x2F;W)，0表示主机发送数据(写)，1表示主机接收数据(读)  </li>
+<li>主机发送地址时，总线上的每个从机都将这7位地址码与自己的地址进行比较，若相同，则认为自己正在被主机寻址，根据R&#x2F;T位将自己确定为发送器和接收器  </li>
+<li>这时候主机等待从机的应答信号(A)  </li>
+<li>当主机收到应答信号时，发送要访问从机的那个地址， 继续等待从机的应答信号</li>
+<li>当主机收到应答信号时，发送N个字节的数据，继续等待从机的N次应答信号</li>
+<li>主机产生停止信号，结束传送过程</li>
+</ol>
+<h3 id="主机读从机数据"><a href="#主机读从机数据" class="headerlink" title="主机读从机数据"></a>主机读从机数据</h3><ol>
+<li>主机首先产生START信号</li>
+<li>然后紧跟着发送一个从机地址，注意此时该地址的第8位为0，表明是向从机写命令</li>
+<li>这时候主机等待从机的应答信号(ACK)</li>
+<li>当主机收到应答信号时，发送要访问的地址，继续等待从机的应答信号</li>
+<li>当主机收到应答信号后，主机要改变通信模式(主机将由发送变为接收，从机将由接收变为发送)所以主机重新发送一个开始start信号，然后紧跟着发送一个从机地址，注意此时该地址的第8位为1，表明将主机设 置成接收模式开始读取数据</li>
+<li>这时候主机等待从机的应答信号，当主机收到应答信号时，就可以接收1个字节的数据，当接收完成后，主机发送非应答信号，表示不在接收数据</li>
+<li>主机进而产生停止信号，结束传送过程</li>
+</ol>
+<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>SPI是一种高速的、全双工、同步的通信总线，并且在芯片的管脚上只占用四根线，节约了芯片的管脚，同时为PCB的布局上节省空间，提供方便，主要应用在 EEPROM，FLASH，实时时钟，AD转换器，还有数字信号处理器和数字信号解码器之间。  </p>
+<h3 id="主从模式"><a href="#主从模式" class="headerlink" title="主从模式"></a>主从模式</h3><p>SPI分为主、从两种模式，一个SPI通讯系统需要包含一个（且只能是一个）主设备，一个或多个从设备。提供时钟的为主设备（Master），接收时钟的设备为从设备（Slave），SPI接口的读写操作，都是由主设备发起。当存在多个从设备时，通过各自的片选信号进行管理。</p>
+<h3 id="信号线"><a href="#信号线" class="headerlink" title="信号线"></a>信号线</h3><p>SPI一般使用四条信号线通信：SDI（数据输入），SDO（数据输出），SCK（时钟），CS（片选）</p>
+<ul>
+<li>MISO：主设备输入&#x2F;从设备输出引脚。该引脚在主模式下接收数据，在从模式下发送数据。</li>
+<li>MOSI：主设备输出&#x2F;从设备输入引脚。该引脚在主模式下发送数据，在从模式下接收数据。</li>
+<li>SCLK：串行时钟信号，由主设备产生。</li>
+<li>CS：从设备片选信号，由主设备控制。它的功能是用来作为“片选引脚”，也就是选择指定的从设备，让主设备可以单独地与特定从设备通讯，避免数据线上的冲突。</li>
+</ul>
+<h3 id="设备选择"><a href="#设备选择" class="headerlink" title="设备选择"></a>设备选择</h3><p>SPI是单主设备（single-master）通信协议，这意味着总线中只有一个设备能发起通信。当SPI主设备想读&#x2F;写从设备时，它首先拉低从设备对应的CS线（CS是低电平有效），接着开始发送工作脉冲到时钟线上，在相应的脉冲时间上，主设备把信号发到MOSI实现“写”，同时可对MISO采样而实现“读”。</p>
+<h3 id="数据发送接收"><a href="#数据发送接收" class="headerlink" title="数据发送接收"></a>数据发送接收</h3><p>SPI主机和从机都有一个串行移位寄存器，主机通过向它的SPI串行寄存器写入一个字节来发起一次传输。  </p>
+<ol>
+<li>首先拉低对应SS信号线，表示与该设备进行通信  </li>
+<li>主机通过发送SCLK时钟信号，来告诉从机写数据或者读数据。（SCLK时钟信号可能是低电平有效，也可能是高电平有效，因为SPI有四种模式）  </li>
+<li>主机(Master)将要发送的数据写到发送数据缓存区(Menory)，缓存区经过移位寄存器(0~7)，串行移位寄存器通过MOSI信号线将字节一位一位的移出去传送给从机，，同时MISO接口接收到的数据经过移位寄存器一位一位的移到接收缓存区。  </li>
+<li>从机(Slave)也将自己的串行移位寄存器(0~7)中的内容通过MISO信号线返回给主机。同时通过MOSI信号线接收主机发送的数据，这样，两个移位寄存器中的内容就被交换。<br>SPI只有主模式和从模式之分，没有读和写的说法，外设的写操作和读操作是同步完成的。如果只进行写操作，主机只需忽略接收到的字节；反之，若主机要读取从机的一个字节，就必须发送一个空字节来引发从机的传输。也就是说，你发一个数据必然会收到一个数据；你要收一个数据必须也要先发一个数据。</li>
+</ol>
+<h3 id="SPI通信的四种模式"><a href="#SPI通信的四种模式" class="headerlink" title="SPI通信的四种模式"></a>SPI通信的四种模式</h3><p>通过CPOL（时钟极性）和CPHA（时钟相位）来控制我们主设备的通信模式。<br>时钟极性(CPOL)定义了时钟空闲状态电平：</p>
+<ul>
+<li>CPOL&#x3D;0，表示当SCLK&#x3D;0时处于空闲态，所以有效状态就是SCLK处于高电平时</li>
+<li>CPOL&#x3D;1，表示当SCLK&#x3D;1时处于空闲态，所以有效状态就是SCLK处于低电平时</li>
+</ul>
+<p>时钟相位(CPHA)定义数据的采集时间：</p>
+<ul>
+<li>CPHA&#x3D;0，在时钟信号SCK的第一个跳变沿采样</li>
+<li>CPHA&#x3D;1，在时钟信号SCK的第二个跳变沿采样</li>
+</ul>
+<p>时钟极性通常写为CKP或CPOL，时钟相位通常写为CKE或CPHA。<br><img src="/img/postpages/bus/SPI.png" alt="SPI">  </p>
+<h2 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h2><p>UART，全称Universal Asynchronous Receiver&#x2F;Transmitter，通用异步收发传输器。<br>USART，全称Universal Synchronous&#x2F;Asynchronous Receiver&#x2F;Transmitter，通用同步异步收发传输器。<br>两者都是一个数据收发器，属于硬件电路范畴。UART使用异步通信，而USART既可异步通信，也可同步通信。当USART使用异步通信时，就变成了UART。单片机的串口指的就是UART或USART。  </p>
+<h3 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h3><p>UART传输的数据被封装成数据包。每个数据包包含1个起始位，5~9个数据位（取决于UART的具体设置），一个可选的奇偶校验位以及1个或2个停止位，具体如下图所示：<br><img src="/img/postpages/bus/UART.png" alt="UART">  </p>
+<h3 id="起始位"><a href="#起始位" class="headerlink" title="起始位"></a>起始位</h3><p>UART数据传输线通常在不传输数据时保持在<strong>高电平</strong>。为了开始数据传输，发送端UART在一个时钟周期内将传输线从<strong>高电平拉低到低电平</strong>。当接收端UART检测到高电压到低电压转换时，它开始以波特率的频率读取数据位中的每一位数据。  </p>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>数据位包含正在传输的实际数据。如果使用奇偶校验位，则可以是5位，最多8位。如果不使用奇偶校验位，则数据帧的长度可以为9位。在大多数情况下，数据首先以低有效位发送。  </p>
+<h3 id="校验位"><a href="#校验位" class="headerlink" title="校验位"></a>校验位</h3><p>串口通信有四种校验方式：偶校验、奇校验、高校验和低校验。当然没有校验位也是可以的。对于偶和奇校验的情况，串口会设置校验位，用一个值确保传输的数据有偶个或者奇个逻辑高位。<br>高位和低位不是真正的检查数据，而是强行将校验位设置为逻辑高或者逻辑低。这样使得接收设备能够知道一个位的状态，有机会判断是否有噪声干扰了通信或者是否传输和接收数据是否不同步。  </p>
+<h3 id="停止位"><a href="#停止位" class="headerlink" title="停止位"></a>停止位</h3><p>发送端UART将数据传输线从低电压驱动到高电压至少持续两位数据的时间宽度来表示整个数据包的传输已经结束。由于数据是在传输线上定时的，并且每一个设备有其自己的时钟，很可能在通信中两台设备间出现了小小的不同步。停止位不仅仅表示传输的结束，并且提供了校正时钟同步的机会。停止位的位数越多，不同时钟同步的容错性越好，但是数据传输率同时也越慢。  </p>
+<h3 id="波特率"><a href="#波特率" class="headerlink" title="波特率"></a>波特率</h3><p>波特率是串口数据的传输速度，即Bit&#x2F;s，常见的波特率有：9600，19200，38400，57600，115200。<br>设目前UART的配置为，1个起始位，8个数据位，0个校验位，1个停止位，那么9600的波特率，可以计算出每位数据的时间宽度为：<br>$$T &#x3D; \frac{1}{9600} &#x3D; 0.000104s &#x3D; 104us$$<br>那么传输一个字节（10位）则需要$1.04ms$  </p>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><ol>
+<li>TTL<br>UART、RS232、RS485在串口通信中，主要区别是电平的不同，其中UART通常使用TTL电平，TTL全名是晶体管-晶体管逻辑集成电路(Transistor-Transistor Logic)。<ul>
+<li>逻辑1为+5V</li>
+<li>逻辑0为0V</li>
+</ul>
+</li>
+<li>RS232<ul>
+<li>逻辑1为-3V~-15V</li>
+<li>逻辑0为+3V~+15V</li>
+</ul>
+</li>
+<li>RS485<br>RS485是差分信号进行串行传输，在工业通信中，使用RS485比较多，因为RS485是差分信号，可以抑制共模干扰，因此在恶劣的环境中拥有很好的抗干扰性，比较稳定。<ul>
+<li>逻辑1以两线间的电压差为+(2~6)V表示  </li>
+<li>逻辑0以两线间的电压差为-(2~6)V表示</li>
+</ul>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/6/">http://wzx046.github.io/post/6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">通信协议</a><a class="post-meta__tags" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></div><div class="post_share"><div class="social-share" data-image="/img/num/1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/7/"><img class="prev-cover" src="/img/num/2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">hexo插入数学公式</div></div></a></div><div class="next-post pull-right"><a href="/post/5/"><img class="next-cover" src="/img/num/7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">队列</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/26/" title="蓝牙"><img class="cover" src="/img/num/7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">蓝牙</div></div></a></div><div><a href="/post/24/" title="ESPIDF-UART"><img class="cover" src="/img/num/5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-18</div><div class="title">ESPIDF-UART</div></div></a></div><div><a href="/post/8/" title="中断"><img class="cover" src="/img/num/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">中断</div></div></a></div><div><a href="/post/9/" title="面试题-单片机（持续更新）"><img class="cover" src="/img/num/4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-28</div><div class="title">面试题-单片机（持续更新）</div></div></a></div><div><a href="/post/4/" title="堆栈"><img class="cover" src="/img/num/6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-19</div><div class="title">堆栈</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">通信协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IIC"><span class="toc-number">1.1.</span> <span class="toc-text">IIC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82"><span class="toc-number">1.1.2.</span> <span class="toc-text">协议层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9C%89%E6%95%88%E6%80%A7"><span class="toc-number">1.1.3.</span> <span class="toc-text">数据有效性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%AD%94%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.1.4.</span> <span class="toc-text">应答信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81"><span class="toc-number">1.1.5.</span> <span class="toc-text">数据传送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.6.</span> <span class="toc-text">帧格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E5%90%91%E4%BB%8E%E6%9C%BA%E5%86%99%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.7.</span> <span class="toc-text">主机向从机写数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E8%AF%BB%E4%BB%8E%E6%9C%BA%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.8.</span> <span class="toc-text">主机读从机数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPI"><span class="toc-number">1.2.</span> <span class="toc-text">SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">主从模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E7%BA%BF"><span class="toc-number">1.2.3.</span> <span class="toc-text">信号线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.4.</span> <span class="toc-text">设备选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%91%E9%80%81%E6%8E%A5%E6%94%B6"><span class="toc-number">1.2.5.</span> <span class="toc-text">数据发送接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.6.</span> <span class="toc-text">SPI通信的四种模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UART"><span class="toc-number">1.3.</span> <span class="toc-text">UART</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%B7%E5%A7%8B%E4%BD%8D"><span class="toc-number">1.3.2.</span> <span class="toc-text">起始位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.3.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E4%BD%8D"><span class="toc-number">1.3.4.</span> <span class="toc-text">校验位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E4%BD%8D"><span class="toc-number">1.3.5.</span> <span class="toc-text">停止位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E7%89%B9%E7%8E%87"><span class="toc-number">1.3.6.</span> <span class="toc-text">波特率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82"><span class="toc-number">1.3.7.</span> <span class="toc-text">物理层</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/48/" title="Windows系统安装"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows系统安装"/></a><div class="content"><a class="title" href="/post/48/" title="Windows系统安装">Windows系统安装</a><time datetime="2023-10-09T09:33:23.000Z" title="发表于 2023-10-09 17:33:23">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/47/" title="删除U盘EFI分区"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="删除U盘EFI分区"/></a><div class="content"><a class="title" href="/post/47/" title="删除U盘EFI分区">删除U盘EFI分区</a><time datetime="2023-10-09T08:50:05.000Z" title="发表于 2023-10-09 16:50:05">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/46/" title="摄影入门"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影入门"/></a><div class="content"><a class="title" href="/post/46/" title="摄影入门">摄影入门</a><time datetime="2023-07-04T08:55:02.000Z" title="发表于 2023-07-04 16:55:02">2023-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/45/" title="电流检测电路(未完待续)"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="电流检测电路(未完待续)"/></a><div class="content"><a class="title" href="/post/45/" title="电流检测电路(未完待续)">电流检测电路(未完待续)</a><time datetime="2023-06-23T08:58:33.000Z" title="发表于 2023-06-23 16:58:33">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/44/" title="ESPIDF-WIFI系列（1）"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESPIDF-WIFI系列（1）"/></a><div class="content"><a class="title" href="/post/44/" title="ESPIDF-WIFI系列（1）">ESPIDF-WIFI系列（1）</a><time datetime="2023-06-14T07:56:20.000Z" title="发表于 2023-06-14 15:56:20">2023-06-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

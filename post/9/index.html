@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>面试题-单片机（持续更新） | Star</title><meta name="keywords" content="单片机"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="面试题-单片机GPIO工作模式VCC、VDD、VSS等区别 VCC：C&#x3D;circuit 表示电路的意思, 即接入电路的电压； VDD：D&#x3D;device 表示器件的意思, 即器件内部的工作电压；  VSS：S&#x3D;series 表示公共连接的意思，通常指电路公共接地端电压。   VEE：负电压供电；场效应管的源极（S） VPP：编程&#x2F;擦除电压。  推挽结构和推挽电">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题-单片机（持续更新）">
+<meta property="og:url" content="http://wzx046.github.io/post/9/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="面试题-单片机GPIO工作模式VCC、VDD、VSS等区别 VCC：C&#x3D;circuit 表示电路的意思, 即接入电路的电压； VDD：D&#x3D;device 表示器件的意思, 即器件内部的工作电压；  VSS：S&#x3D;series 表示公共连接的意思，通常指电路公共接地端电压。   VEE：负电压供电；场效应管的源极（S） VPP：编程&#x2F;擦除电压。  推挽结构和推挽电">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/4.jpg">
+<meta property="article:published_time" content="2022-09-28T01:45:07.000Z">
+<meta property="article:modified_time" content="2022-10-06T07:46:28.000Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="单片机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/4.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/9/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '面试题-单片机（持续更新）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-06 15:46:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">面试题-单片机（持续更新）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-28T01:45:07.000Z" title="发表于 2022-09-28 09:45:07">2022-09-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-06T07:46:28.000Z" title="更新于 2022-10-06 15:46:28">2022-10-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="面试题-单片机（持续更新）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="面试题-单片机"><a href="#面试题-单片机" class="headerlink" title="面试题-单片机"></a>面试题-单片机</h1><h2 id="GPIO工作模式"><a href="#GPIO工作模式" class="headerlink" title="GPIO工作模式"></a>GPIO工作模式</h2><h3 id="VCC、VDD、VSS等区别"><a href="#VCC、VDD、VSS等区别" class="headerlink" title="VCC、VDD、VSS等区别"></a>VCC、VDD、VSS等区别</h3><ul>
+<li>VCC：C&#x3D;circuit 表示电路的意思, 即接入电路的电压；</li>
+<li>VDD：D&#x3D;device 表示器件的意思, 即器件内部的工作电压； </li>
+<li>VSS：S&#x3D;series 表示公共连接的意思，通常指电路公共接地端电压。  </li>
+<li>VEE：负电压供电；场效应管的源极（S）</li>
+<li>VPP：编程&#x2F;擦除电压。</li>
+</ul>
+<h3 id="推挽结构和推挽电路"><a href="#推挽结构和推挽电路" class="headerlink" title="推挽结构和推挽电路"></a>推挽结构和推挽电路</h3><p>推挽结构一般是指两个参数相同的三极管或MOS管分别受两互补信号的控制，总是在一个三极管或MOS管导通的时候另一个截止。高低电平由输出电平决定。<br>推挽电路是两个参数相同的三极管或MOSFET，以推挽方式存在于电路中，各负责正负半周的波形放大任务。电路工作时，两只对称的功率开关管每次只有一个导通，所以导通损耗小、效率高。输出既可以向负载灌电流，也可以从负载抽取电流。推拉式输出级既提高电路的负载能力，又提高开关速度。  </p>
+<h3 id="开漏输出和推挽输出的区别"><a href="#开漏输出和推挽输出的区别" class="headerlink" title="开漏输出和推挽输出的区别"></a>开漏输出和推挽输出的区别</h3><p>开漏输出：只可以输出强低电平，高电平得靠外部电阻拉高。输出端相当于三极管的集电极。适合于做电流型的驱动，其吸收电流的能力相对强(一般20ma以内)。<br>推挽输出:可以输出强高、低电平。<br><img src="/img/postpages/interview/gpio.jpg" alt="gpio"><br>该图中左边的便是推挽输出模式，其中比较器输出高电平时下面的PNP三极管截止，而上面NPN三极管导通，输出电平VS+；当比较器输出低电平时则恰恰相反，PNP三极管导通，输出和地相连，为低电平。右边的则可以理解为开漏输出形式，需要接上拉。</p>
+<h3 id="上下拉电阻作用"><a href="#上下拉电阻作用" class="headerlink" title="上下拉电阻作用"></a>上下拉电阻作用</h3><ul>
+<li>确定未按下的时候IO输入电平的状态，否则是悬空的。</li>
+<li>以提高芯片的抗干扰能力。</li>
+<li>当单片机的IO口作输出时，如果不接上拉电阻只能提供灌电流。无法输出电流驱动外接设备。这时也需要考虑上拉电阻。这样才可以使IO输出高电平。</li>
+</ul>
+<h3 id="GPIO八种工作模式"><a href="#GPIO八种工作模式" class="headerlink" title="GPIO八种工作模式"></a>GPIO八种工作模式</h3><ol>
+<li>浮空输入<br>数据通道中仅接入TTL触发器（作用是将相对缓慢变化的模拟信号变成矩形信号）整形，随后输入输入数据寄存器，该种工作模式未接入任何上拉&#x2F;下拉电阻。 模式特点：在该引脚悬空（无信号输入）的情况下，读取该端口的电平是不确定的。 适用场合：外部按键输入&#x2F;USART RX引脚。  </li>
+<li>上拉输入<br>在数据通道前端接入了一个上拉电阻。模式特点：在无信号输入时端口电位受上拉电阻钳制，I&#x2F;O端口输入电平始终保持为高电平；而当端口输入电平为低电平时，I&#x2F;O端口输入电平为低电平。 适用场合：需要IO内部上拉电阻输入时，器件的外部中断（IRQ）引脚触发中断条件为下降沿触发&#x2F;低电平触发，这样在无信号输入时始终保持高电平，如果有事件触发中断IRQ可以输出一个低电平，进而可产生（下降沿&#x2F;低电平）中断。</li>
+<li>下拉输入<br>在数据通道前端接入了一个下拉电阻。模式特点：在无信号输入时端口电位受下拉电阻钳制，I&#x2F;O端口输入电平始终保持为低电平；而当端口输入电平为高电平时，I&#x2F;O端口输入电平为高电平。 适用场合：需要IO内部下拉电阻输入时，器件的外部中断（IRQ）引脚触发中断条件为上升沿触发&#x2F;高电平触发时，该端口可以选择下拉输入模式。  </li>
+<li>模拟输入<br>模拟输入模式下，I&#x2F;O端口的模拟信号（电压信号，而非电平信号）直接模拟输入到片上外设模块，比如ADC模块等。  </li>
+<li>开漏输出<br>开漏输出：适合做电流型的驱动，其吸收电流能力较强。当CPU输出逻辑’0’时，I&#x2F;O端口输出低电平，而当CPU输出逻辑’1’时，该引脚处于开漏，也就是浮空状态（高阻态），如果想输出高电平则必须接入上拉电阻。同时IO口可以由外部电路改变为低电平或不变，即可读IO输入电平变化，实现了I&#x2F;O端口的双向功能；</li>
+<li>开漏复用输出<br>与开漏输出特性一致，只不过引脚选择了复用功能  </li>
+<li>推挽输出<br>输出具有驱动能力，当CPU输出逻辑’0’时，I&#x2F;O端口输出低电平，而当CPU输出逻辑’1’时，I&#x2F;O端口输出高电平，通常作为普通的GPIO用于驱动LED、数码管等电子元器件或输出控制某个信号。  </li>
+<li>推挽复用输出<br>一个引脚通常可作为普通GPIO来使用，但通常有多个复用模块对应着同一个引脚，那么当这个GPIO作为内置外设引脚时，就叫做复用模式。</li>
+</ol>
+<h2 id="精度与分辨率"><a href="#精度与分辨率" class="headerlink" title="精度与分辨率"></a>精度与分辨率</h2><ul>
+<li>精度是指传感器测量值与真实值之间的差值，又叫测量误差。  </li>
+<li>分辨率是指传感器最小能读到的数值，即被测量变化多少才能引起传感器响应。</li>
+</ul>
+<h2 id="输入阻抗高低"><a href="#输入阻抗高低" class="headerlink" title="输入阻抗高低"></a>输入阻抗高低</h2><h2 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h2><p>DMA，全称Direct Memory Access，即直接存储器访问。<br>DMA用来提供在外设和存储器之间或者存储器和存储器之间的高速数据传输。无须CPU的干预，通过DMA数据可以快速地移动。这就节省了CPU的资源来做其他操作。<br>传输参数：</p>
+<ol>
+<li><strong>数据源地址</strong></li>
+<li><strong>数据目标地址</strong></li>
+<li><strong>数据传输量</strong></li>
+<li>传输次数</li>
+</ol>
+<p>以UART为例，如果要接收数据，会触发UART中断，然后CPU介入，在中断中通过CPU将UART输入寄存器的值读出来，存放到内存中；<br>而DMA方式，产生UART中断后，DMA直接参与，把UART输入寄存器的值搬运到内存中，CPU只需要在去检查内存的值就好了，这样提高了CPU的效率。  </p>
+<h2 id="SRAM-amp-DRAM-amp-SDRAM"><a href="#SRAM-amp-DRAM-amp-SDRAM" class="headerlink" title="SRAM &amp; DRAM &amp; SDRAM"></a>SRAM &amp; DRAM &amp; SDRAM</h2><ul>
+<li>静态RAM（Static RAM&#x2F;SRAM）：SRAM速度非常快，是目前读写最快的存储设备了，但是它也非常昂贵，所以只在要求很苛刻的地方使用，譬如CPU的一级缓冲，二级缓冲。  </li>
+<li>动态RAM（Dynamic RAM&#x2F;DRAM）：DRAM保留数据的时间很短，速度也比SRAM慢，不过它还是比任何的ROM都要快，但从价格上来说DRAM相比SRAM要便宜很多。  </li>
+<li>同步动态随机存储器SDRAM：同步（Synchronous）是指内存工作需要同步时钟，内部的命令的发送与数据的传输都以它为基准，动态（Dynamic）是指存储阵列需要不断的刷新来保证数据不丢失，随机（Random）是指数据不是线性依次存储，而是自由指定地址进行数据读写。SDRAM具有空间存储量大、读写速度快、价格相对便宜等优点。然而由于SDRAM内部利用电容来存储数据，为保证数据不丢失，需要持续对各存储电容进行刷新操作；同时在读写过程中 需要考虑行列管理、各种操作延时等，由此导致了其控制逻辑复杂的特点。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/9/">http://wzx046.github.io/post/9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></div><div class="post_share"><div class="social-share" data-image="/img/num/4.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/10/"><img class="prev-cover" src="/img/num/5.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">面试题-C语言（持续更新）</div></div></a></div><div class="next-post pull-right"><a href="/post/8/"><img class="next-cover" src="/img/num/3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">中断</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/6/" title="通信协议"><img class="cover" src="/img/num/1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-22</div><div class="title">通信协议</div></div></a></div><div><a href="/post/8/" title="中断"><img class="cover" src="/img/num/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">中断</div></div></a></div><div><a href="/post/4/" title="堆栈"><img class="cover" src="/img/num/6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-19</div><div class="title">堆栈</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%8D%95%E7%89%87%E6%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">面试题-单片机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">GPIO工作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VCC%E3%80%81VDD%E3%80%81VSS%E7%AD%89%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.1.</span> <span class="toc-text">VCC、VDD、VSS等区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E6%8C%BD%E7%BB%93%E6%9E%84%E5%92%8C%E6%8E%A8%E6%8C%BD%E7%94%B5%E8%B7%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">推挽结构和推挽电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%BC%8F%E8%BE%93%E5%87%BA%E5%92%8C%E6%8E%A8%E6%8C%BD%E8%BE%93%E5%87%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.1.3.</span> <span class="toc-text">开漏输出和推挽输出的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%8B%89%E7%94%B5%E9%98%BB%E4%BD%9C%E7%94%A8"><span class="toc-number">1.1.4.</span> <span class="toc-text">上下拉电阻作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPIO%E5%85%AB%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.5.</span> <span class="toc-text">GPIO八种工作模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%BE%E5%BA%A6%E4%B8%8E%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">1.2.</span> <span class="toc-text">精度与分辨率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%98%BB%E6%8A%97%E9%AB%98%E4%BD%8E"><span class="toc-number">1.3.</span> <span class="toc-text">输入阻抗高低</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DMA"><span class="toc-number">1.4.</span> <span class="toc-text">DMA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SRAM-amp-DRAM-amp-SDRAM"><span class="toc-number">1.5.</span> <span class="toc-text">SRAM &amp; DRAM &amp; SDRAM</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/48/" title="Windows系统安装"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows系统安装"/></a><div class="content"><a class="title" href="/post/48/" title="Windows系统安装">Windows系统安装</a><time datetime="2023-10-09T09:33:23.000Z" title="发表于 2023-10-09 17:33:23">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/47/" title="删除U盘EFI分区"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="删除U盘EFI分区"/></a><div class="content"><a class="title" href="/post/47/" title="删除U盘EFI分区">删除U盘EFI分区</a><time datetime="2023-10-09T08:50:05.000Z" title="发表于 2023-10-09 16:50:05">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/46/" title="摄影入门"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影入门"/></a><div class="content"><a class="title" href="/post/46/" title="摄影入门">摄影入门</a><time datetime="2023-07-04T08:55:02.000Z" title="发表于 2023-07-04 16:55:02">2023-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/45/" title="电流检测电路(未完待续)"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="电流检测电路(未完待续)"/></a><div class="content"><a class="title" href="/post/45/" title="电流检测电路(未完待续)">电流检测电路(未完待续)</a><time datetime="2023-06-23T08:58:33.000Z" title="发表于 2023-06-23 16:58:33">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/44/" title="ESPIDF-WIFI系列（1）"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESPIDF-WIFI系列（1）"/></a><div class="content"><a class="title" href="/post/44/" title="ESPIDF-WIFI系列（1）">ESPIDF-WIFI系列（1）</a><time datetime="2023-06-14T07:56:20.000Z" title="发表于 2023-06-14 15:56:20">2023-06-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

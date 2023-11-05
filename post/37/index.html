@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ESP32自动下载电路分析 | Star</title><meta name="keywords" content="ESP32,硬件"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ESP32自动下载电路分析前言最近画了块 ESP32 的板子，焊了两块，一块 RESET 有问题，一块 IO0 有问题，导致下载的时候得手动跳线，很是麻烦，于是想搞一下自动下载电路。 硬件原理图分析自动下载电路图(RST应为RTS) 串口流控机制 DTR： Data Terminal Ready，数据终端准备好，低有效 RTS：Request To Send，请求发送，低有效  逻辑关系 ESP3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32自动下载电路分析">
+<meta property="og:url" content="http://wzx046.github.io/post/37/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="ESP32自动下载电路分析前言最近画了块 ESP32 的板子，焊了两块，一块 RESET 有问题，一块 IO0 有问题，导致下载的时候得手动跳线，很是麻烦，于是想搞一下自动下载电路。 硬件原理图分析自动下载电路图(RST应为RTS) 串口流控机制 DTR： Data Terminal Ready，数据终端准备好，低有效 RTS：Request To Send，请求发送，低有效  逻辑关系 ESP3">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/4.jpg">
+<meta property="article:published_time" content="2023-04-15T08:29:37.000Z">
+<meta property="article:modified_time" content="2023-04-16T12:04:26.000Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="ESP32">
+<meta property="article:tag" content="硬件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/4.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/37/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ESP32自动下载电路分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 20:04:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ESP32自动下载电路分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-15T08:29:37.000Z" title="发表于 2023-04-15 16:29:37">2023-04-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-16T12:04:26.000Z" title="更新于 2023-04-16 20:04:26">2023-04-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A1%AC%E4%BB%B6/">硬件</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ESP32自动下载电路分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ESP32自动下载电路分析"><a href="#ESP32自动下载电路分析" class="headerlink" title="ESP32自动下载电路分析"></a>ESP32自动下载电路分析</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近画了块 ESP32 的板子，焊了两块，一块 RESET 有问题，一块 IO0 有问题，导致下载的时候得手动跳线，很是麻烦，于是想搞一下自动下载电路。</p>
+<h2 id="硬件原理图分析"><a href="#硬件原理图分析" class="headerlink" title="硬件原理图分析"></a>硬件原理图分析</h2><p>自动下载电路图(RST应为RTS)<br><img src="/img/postpages/hardware/autodownload.jpg"></p>
+<h3 id="串口流控机制"><a href="#串口流控机制" class="headerlink" title="串口流控机制"></a>串口流控机制</h3><ul>
+<li>DTR： Data Terminal Ready，数据终端准备好，低有效</li>
+<li>RTS：Request To Send，请求发送，低有效</li>
+</ul>
+<h3 id="逻辑关系"><a href="#逻辑关系" class="headerlink" title="逻辑关系"></a>逻辑关系</h3><ul>
+<li>ESP32系统启动模式</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">管脚</th>
+<th align="center">默认</th>
+<th align="center">SPI Flash 启动模式</th>
+<th align="center">下载启动模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">GPIO0</td>
+<td align="center">上拉</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">GPIO2</td>
+<td align="center">下拉</td>
+<td align="center">无关项</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">EN</td>
+<td align="center">高有效</td>
+<td align="center">无关项</td>
+<td align="center">无关项</td>
+</tr>
+</tbody></table>
+<ul>
+<li>硬件电路逻辑</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">DTR</th>
+<th align="center">RTS</th>
+<th align="center">EN</th>
+<th align="center">IO0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>当 DTR 和 RTS 同时为 0 或者同时为 1 时，三极管 Q1 和 Q2 均为截止状态，此时 EN 和 IO0 的状态由其他电路决定（内部&#x2F;外部上拉电阻）。<br>当 DTR 和 RTS 不同时，EN &#x3D; RTS, IO0 &#x3D; DTR。<br><strong>要进入下载模式，就要保证 EN 由 0 变为 1 时，IO0 得保持低电平。</strong></p>
+<h2 id="官方下载源码分析"><a href="#官方下载源码分析" class="headerlink" title="官方下载源码分析"></a>官方下载源码分析</h2><h3 id="下面是官方-esptool-py-的下载源码。"><a href="#下面是官方-esptool-py-的下载源码。" class="headerlink" title="下面是官方 esptool.py 的下载源码。"></a>下面是官方 esptool.py 的下载源码。</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_connect_attempt</span>(<span class="params">self, mode=<span class="string">&#x27;default_reset&#x27;</span>, esp32r0_delay=<span class="literal">False</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; A single connection attempt, with esp32r0 workaround options &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># esp32r0_delay is a workaround for bugs with the most common auto reset</span></span><br><span class="line">        <span class="comment"># circuit and Windows, if the EN pin on the dev board does not have</span></span><br><span class="line">        <span class="comment"># enough capacitance.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># Newer dev boards shouldn&#x27;t have this problem (higher value capacitor</span></span><br><span class="line">        <span class="comment"># on the EN pin), and ESP32 revision 1 can&#x27;t use this workaround as it</span></span><br><span class="line">        <span class="comment"># relies on a silicon bug.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># Details: https://github.com/espressif/esptool/issues/136</span></span><br><span class="line">        last_error = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># If we&#x27;re doing no_sync, we&#x27;re likely communicating as a pass through</span></span><br><span class="line">        <span class="comment"># with an intermediate device to the ESP32</span></span><br><span class="line">        <span class="keyword">if</span> mode == <span class="string">&quot;no_reset_no_sync&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> last_error</span><br><span class="line"></span><br><span class="line">        <span class="comment"># issue reset-to-bootloader:</span></span><br><span class="line">        <span class="comment"># RTS = either CH_PD/EN or nRESET (both active low = chip in reset</span></span><br><span class="line">        <span class="comment"># DTR = GPIO0 (active low = boot to flasher)</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># DTR &amp; RTS are active low signals,</span></span><br><span class="line">        <span class="comment"># ie True = pin @ 0V, False = pin @ VCC.</span></span><br><span class="line">        <span class="keyword">if</span> mode != <span class="string">&#x27;no_reset&#x27;</span>:</span><br><span class="line">            self._setDTR(<span class="literal">False</span>)  <span class="comment"># IO0=HIGH</span></span><br><span class="line">            self._setRTS(<span class="literal">True</span>)   <span class="comment"># EN=LOW, chip in reset</span></span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">            <span class="keyword">if</span> esp32r0_delay:</span><br><span class="line">                <span class="comment"># Some chips are more likely to trigger the esp32r0</span></span><br><span class="line">                <span class="comment"># watchdog reset silicon bug if they&#x27;re held with EN=LOW</span></span><br><span class="line">                <span class="comment"># for a longer period</span></span><br><span class="line">                time.sleep(<span class="number">1.2</span>)</span><br><span class="line">            self._setDTR(<span class="literal">True</span>)   <span class="comment"># IO0=LOW</span></span><br><span class="line">            self._setRTS(<span class="literal">False</span>)  <span class="comment"># EN=HIGH, chip out of reset</span></span><br><span class="line">            <span class="keyword">if</span> esp32r0_delay:</span><br><span class="line">                <span class="comment"># Sleep longer after reset.</span></span><br><span class="line">                <span class="comment"># This workaround only works on revision 0 ESP32 chips,</span></span><br><span class="line">                <span class="comment"># it exploits a silicon bug spurious watchdog reset.</span></span><br><span class="line">                time.sleep(<span class="number">0.4</span>)  <span class="comment"># allow watchdog reset to occur</span></span><br><span class="line">            time.sleep(<span class="number">0.05</span>)</span><br><span class="line">            self._setDTR(<span class="literal">False</span>)  <span class="comment"># IO0=HIGH, done</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                self.flush_input()</span><br><span class="line">                self._port.flushOutput()</span><br><span class="line">                self.sync()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">            <span class="keyword">except</span> FatalError <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">if</span> esp32r0_delay:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;_&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;.&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">                sys.stdout.flush()</span><br><span class="line">                time.sleep(<span class="number">0.05</span>)</span><br><span class="line">                last_error = e</span><br><span class="line">        <span class="keyword">return</span> last_error</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><p>根据注释来看，默认的可能 DTR 直接连接 IO0，RTS 直接连接 EN。但我们这里要根据自动下载电路来分析。因为 python 是解释性语言，语句之间的时间不能忽略。      </p>
+<ol>
+<li><strong>DTR &#x3D; 1, RTS &#x3D; 0; –&gt; EN &#x3D; 0, IO0 &#x3D; 1</strong>;   </li>
+<li><strong>DTR &#x3D; 0, RTS &#x3D; 0; –&gt; EN &#x3D; 1, IO0 &#x3D; 1</strong>;   </li>
+<li><strong>DTR &#x3D; 0, RTS &#x3D; 1; –&gt; EN &#x3D; 1, IO0 &#x3D; 0</strong>;   </li>
+<li><strong>DTR &#x3D; 0, RTS &#x3D; 1; –&gt; EN &#x3D; 1, IO0 &#x3D; 1</strong>;</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>管脚</th>
+<th align="left">时序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EN</td>
+<td align="left">…………….&#x2F;‘’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’</td>
+</tr>
+<tr>
+<td>IO0</td>
+<td align="left">‘’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’\…………….&#x2F;‘’’’’’’’’’’’’’’’</td>
+</tr>
+</tbody></table>
+<p>要进入下载模式时， EN 复位时 IO0 应该为低电平，至少应该出现下面的时序。当 EN 由 0 变为 1 前后，IO0 至少应该保持一段低电平以保证进入下载模式。  </p>
+<table>
+<thead>
+<tr>
+<th>管脚</th>
+<th align="left">时序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EN</td>
+<td align="left">…………….&#x2F;‘’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’</td>
+</tr>
+<tr>
+<td>IO0</td>
+<td align="left">…………………………..&#x2F;‘’’’’’’’’’’’’’’’</td>
+</tr>
+</tbody></table>
+<h3 id="电路分析"><a href="#电路分析" class="headerlink" title="电路分析"></a>电路分析</h3><p>在电路中，EN 一端还连着一个 1uF 的电容。根据数字端口特性，<img src="/img/postpages/hardware/duankou.jpg">输入逻辑电平高为 0.75VDD。按照电容充电时间公式可以进行计算<br>$$ 0.75VDD &#x3D; VDD\cdot (1-e^{-t&#x2F;RC})$$<br>将 $VDD &#x3D; 3.3V$、$R &#x3D; 12K\Omega$、$C &#x3D; 1\mu F$ 带入上式计算，可以得到<br>$$t &#x3D; 16.6ms$$<br>即 EN 的上升沿跳变会延迟 16.6 毫秒。在 esptool.py 中，RTS &#x3D; 1 之后延迟了 50 毫秒，即把 IO0 &#x3D; 0 的时间延长了 50 毫秒，保证 EN 的电平转换的时间段内 IO0 为低电平，从而进入下载模式。</p>
+<h2 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h2><ol>
+<li>在 esptool.py 中，根据注释，貌似乐鑫是直接把 DTR、RTS 与 EN、IO0 连着，那么这样搞自动下载电路可以吗？<br>最初的电路确实是 DTR、RTS 直接接的 EN、IO0，只是因为有部分串口程序自动打开了硬件 flow control，导致默认 RTS 被拉低，ESP 会一直保持在复位状态；详细信息见 <a target="_blank" rel="noopener" href="https://www.esp32.com/viewtopic.php?t=5731#p24882">https://www.esp32.com/viewtopic.php?t=5731#p24882</a>  </li>
+<li>在抄安信可的 NODEMCU 板子时，发现他的自动下载电路没有那颗电容，不知道是怎么回事。</li>
+</ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145369083?from_voters_page=true">知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wutongpro/article/details/109101063?ops_request_misc=&request_id=&biz_id=&utm_medium=distribute.pc_search_result.none-task-blog-2~all~koosearch~default-7-109101063-null-null.142%5Ev83%5Ekoosearch_v1,239%5Ev2%5Einsert_chatgpt&utm_term=esp32%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E7%94%B5%E8%B7%AF&spm=1018.2226.3001.4187">CSDN</a>     </li>
+<li><a target="_blank" rel="noopener" href="https://www.esp32.com/viewtopic.php?t=5731#p24882">espressif</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/espressif/esptool/issues/136">github</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/37/">http://wzx046.github.io/post/37/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ESP32/">ESP32</a><a class="post-meta__tags" href="/tags/%E7%A1%AC%E4%BB%B6/">硬件</a></div><div class="post_share"><div class="social-share" data-image="/img/num/4.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/38/"><img class="prev-cover" src="/img/num/5.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">总和最大区间问题</div></div></a></div><div class="next-post pull-right"><a href="/post/36/"><img class="next-cover" src="/img/num/3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">灰度投影法视频稳像</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/40/" title="ESP32 自动下载模块"><img class="cover" src="/img/num/9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-07</div><div class="title">ESP32 自动下载模块</div></div></a></div><div><a href="/post/41/" title="自制 ESP32 开发板"><img class="cover" src="/img/num/10.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-08</div><div class="title">自制 ESP32 开发板</div></div></a></div><div><a href="/post/26/" title="蓝牙"><img class="cover" src="/img/num/7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">蓝牙</div></div></a></div><div><a href="/post/25/" title="ESP32中断Bug"><img class="cover" src="/img/num/6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-19</div><div class="title">ESP32中断Bug</div></div></a></div><div><a href="/post/21/" title="ESPIDF-GPIO"><img class="cover" src="/img/num/2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-15</div><div class="title">ESPIDF-GPIO</div></div></a></div><div><a href="/post/22/" title="ESPIDF-定时器"><img class="cover" src="/img/num/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-16</div><div class="title">ESPIDF-定时器</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ESP32%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">ESP32自动下载电路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E5%8E%9F%E7%90%86%E5%9B%BE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">硬件原理图分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E6%B5%81%E6%8E%A7%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">串口流控机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%85%B3%E7%B3%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">逻辑关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">官方下载源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E6%98%AF%E5%AE%98%E6%96%B9-esptool-py-%E7%9A%84%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E3%80%82"><span class="toc-number">1.3.1.</span> <span class="toc-text">下面是官方 esptool.py 的下载源码。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">电路分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%96%91%E6%83%91"><span class="toc-number">1.4.</span> <span class="toc-text">疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.5.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/48/" title="Windows系统安装"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows系统安装"/></a><div class="content"><a class="title" href="/post/48/" title="Windows系统安装">Windows系统安装</a><time datetime="2023-10-09T09:33:23.000Z" title="发表于 2023-10-09 17:33:23">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/47/" title="删除U盘EFI分区"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="删除U盘EFI分区"/></a><div class="content"><a class="title" href="/post/47/" title="删除U盘EFI分区">删除U盘EFI分区</a><time datetime="2023-10-09T08:50:05.000Z" title="发表于 2023-10-09 16:50:05">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/46/" title="摄影入门"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影入门"/></a><div class="content"><a class="title" href="/post/46/" title="摄影入门">摄影入门</a><time datetime="2023-07-04T08:55:02.000Z" title="发表于 2023-07-04 16:55:02">2023-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/45/" title="电流检测电路(未完待续)"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="电流检测电路(未完待续)"/></a><div class="content"><a class="title" href="/post/45/" title="电流检测电路(未完待续)">电流检测电路(未完待续)</a><time datetime="2023-06-23T08:58:33.000Z" title="发表于 2023-06-23 16:58:33">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/44/" title="ESPIDF-WIFI系列（1）"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESPIDF-WIFI系列（1）"/></a><div class="content"><a class="title" href="/post/44/" title="ESPIDF-WIFI系列（1）">ESPIDF-WIFI系列（1）</a><time datetime="2023-06-14T07:56:20.000Z" title="发表于 2023-06-14 15:56:20">2023-06-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
