@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>DIY1 | Star</title><meta name="keywords" content="DIY,ESP32,磁悬浮,无线充电"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DIY1">
+<meta property="og:url" content="http://wzx046.github.io/post/67/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/5.jpg">
+<meta property="article:published_time" content="2025-01-02T12:19:11.000Z">
+<meta property="article:modified_time" content="2025-01-13T15:20:31.179Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="DIY">
+<meta property="article:tag" content="ESP32">
+<meta property="article:tag" content="磁悬浮">
+<meta property="article:tag" content="无线充电">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/5.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/67/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DIY1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-13 23:20:31'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DIY1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-02T12:19:11.000Z" title="发表于 2025-01-02 20:19:11">2025-01-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-13T15:20:31.179Z" title="更新于 2025-01-13 23:20:31">2025-01-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DIY/">DIY</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DIY1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="af3210362ae5541242f70217628bbe9d9de918eb691a6c7623d19bd76d04cf66">8b964abdcbe4167494dfe5c8bfb76b0869e90686022ef342a659427b57a83d18623a171389fb950b98a78c4c8e3a78e7bef96f63d9f5fe80074ddac3d9bec9eddeeb1038b618881c488d2119ff6318c0d8862e27bbfd3d9820e28424b352f3e32685bfcaa7c1795a751b8bf30a47facf15c6e992871f77b8c5a6ab2ad0efe5be2cc8fbb3642f0ddff7132b793fd2d344a6f5cec25419a7c1a485e1bf5d0e44c2c0a648fdd1f5881946d346291c10ff5664e312d0c7df714d7a7d15122520367172ee8b0f5deb53fc35b3d8061dfd1b76274beff586bc2e9c081027b90e2ea9615ca2eb6571e79e7e2546e2d9fbd587a20ad0a09bc8f01455eb8204fea8c1260a4b0a82060fc168a004e7f6d4e2f6de1ac78891c2647134706c5a2a124c0d725986b68274b69386568633cdca51732e2ac2b34d393f15b703ae7d8abb2f7b2ec25a3f2fe6995abf5562e006c8e525e9660c0fb9354345e47e6dd2a1b3c6364a6b635f55d103c42cfcc9da8212c80a7df1152dcd5b0655ab40eb709e8e160fa84ee2d38d2c523a9a94cc485259c43a9f60bee4e8a5a9e7e8953ffa5c3f4fe710d855ab6df54215af8835d959c3f7ecc2e51ef03860883009d8d7912e07900f250a765db7ff7383aa5b6f417371646d69b09b04ee50a16afba5354850edcde47974c57b609366ff3e42505fbd100d494be94d7a3d16c672fe41230cd2957618a18dea6fba12b4601f53f3a725876bbef0be1b7dfd64465cabbfce04b025365819e7b90fa296c70a250dc8b03f53e999140a9afc3575bde0306ef2820494787255a1fd4a8e60be6699be8766dbffc472cc0b462efb7c882c85325815097043aa448bc44e4a90d13ad53eaca4be9ab54a12f870bd5e658d1def9dd59d50da56b6aed3e48913af500f98a6aae5b0252886dea3a54dc98fc02b69adcb309a3a569a699477e10dfea912839e57c753644388cdf8aacc61bf458d85d4fce8026ea6d553897029d7ad2b9d86800ea3549d33ba42d2ffd51909ca865da21543b73d974977d29c34bb71364fb5659d927122589e48c9bf82d1464398f7b8ccfb5114534036bc1fe5b19d899a53e7d7c420c89317ec88db07785fff726ba45646918884555a2cfb80753d6e2dc0e6d0f9aa459810bcf88ea573ef79d7bac868415bc23fe56886dd0a0a9302210bffdb6905442cfb834310b8f71beb1ac3c64d79be00bb95297df684d27290437757c780cf71e926cf87eaccbd4efb8391cd23ca60be9134ce9ad9b7080d7925efc3dff070988eba644ae5b0d3eb3eb44b120f4a583b4e8bfa2d0db1d05df1b5295840941674a463b3c77950403a6c8725aa02fadbf196c53f66038760b06f004e052a0050bc8a208d6c9a3e9fa87481ca8ce8703d001f616a00b20a4451eebab3663b15ea6f1a1ee099b00b36f50e29024ef95b8f10a3e4c3701b3a7d9350f990b2c73f0ea7d7a9729046e2d0df47c8ec1b715b6e0a827b489805518788ef8ce08e7da1c0b8a5cec55ea719de3e9bb8abd734a6348b7aaa2eda75c5b4026802612de96c6380e14ef87fe107c9693f3e4de92bca955aa200d610bab0a3856b0733ae3a5b3c3076198100902d77dd813dcf1149a5b77296eaf55151664562d01701678e6371fde58a3aa08230dc518f9b3105d719234967a9e2ebf672d2420e93b6e9e35cefdcf0b9256ce4b317657b2e4cc22b33e155e1092932ea883ac4cd69184916cd566254b0fda9acfbd402ddcc84310ab34b83fe137db20d3b0d7762fc0b443a0baeb081ed40b1b4f563045f8f42e1458e565e29ba7972d155a15ab5b6dd269eb30066402a1442bd4d92d51c1f0c2dff2f1590fc5f99d50ba16945564b85c21722d868a21dfc54d0737c8e4656870217a3602a900fd84fe6f036cdcabecaeb04e6d66df8b61fb8509f9d81e4774ddf78f5c9142c6e1f724fe44b30b163946127cbf408b9eba450f00689c3969a24cc5554f3e3c7647d0b3e48a494c069de4ac66c7e3c2d6c8593afe89f797e73190b1b4a06d215dc28363cc4ebfeeb3e229fb70d910780af99558a2637b0adee367a7a6d2eec6cacf708e5e3650adfc946e3cf248597a9aa6864387c8526279206c9ade31c0f2c9a1bf5f1ba7c559a22c7de0177ededaabd04cda60baa2091328bc52f4dbc4fcfcc78f1c6da085ad3f101be8268c0a872aa7f93d69e82ebde59153e31904075ec670c9e67b840c8900dc9da9a64a9cc00ffab926ad8e04b01175b4d6c18bb2c4c762eb808271daf6d36f4b56329e8f50e2475da2f8a7713682045d26f6d28fadde7f20d196875d9d63f2771be38155a4935cd9147ae920688224363b5920a99233b304e804be5cbaeda081b3a37b0f13556bd22a1d27f2a80ca0866cec4a9969c0cf3756d140a70828ef39e2fa5b2dd9d7f0b662e3631449aedbe55687a5c8ddf7824e9</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">输入密码查看文章</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/67/">http://wzx046.github.io/post/67/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DIY/">DIY</a><a class="post-meta__tags" href="/tags/ESP32/">ESP32</a><a class="post-meta__tags" href="/tags/%E7%A3%81%E6%82%AC%E6%B5%AE/">磁悬浮</a><a class="post-meta__tags" href="/tags/%E6%97%A0%E7%BA%BF%E5%85%85%E7%94%B5/">无线充电</a></div><div class="post_share"><div class="social-share" data-image="/img/num/5.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/64/"><img class="prev-cover" src="/img/num/3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">本地部署大模型知识库</div></div></a></div><div class="next-post pull-right"><a href="/post/63/"><img class="next-cover" src="/img/num/2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Jellyfin 播放卡顿 bug</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/66/" title="树莓派远程监控"><img class="cover" src="/img/num/1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-14</div><div class="title">树莓派远程监控</div></div></a></div><div><a href="/post/51/" title="FreeRTOS实时内核指南——任务管理"><img class="cover" src="/img/num/10.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-07</div><div class="title">FreeRTOS实时内核指南——任务管理</div></div></a></div><div><a href="/post/53/" title="FreeRTOS实时内核指南——队列管理"><img class="cover" src="/img/num/2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-06</div><div class="title">FreeRTOS实时内核指南——队列管理</div></div></a></div><div><a href="/post/56/" title="FreeRTOS实时内核指南——资源管理"><img class="cover" src="/img/num/5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-25</div><div class="title">FreeRTOS实时内核指南——资源管理</div></div></a></div><div><a href="/post/26/" title="蓝牙"><img class="cover" src="/img/num/7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">蓝牙</div></div></a></div><div><a href="/post/25/" title="ESP32中断Bug"><img class="cover" src="/img/num/6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-19</div><div class="title">ESP32中断Bug</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content toc-div-class" style="display:none"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PJXLXD"><span class="toc-number">1.</span> <span class="toc-text">PJXLXD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E5%BA%A7"><span class="toc-number">1.1.</span> <span class="toc-text">底座</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%AE%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">浮子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%90%E6%96%99"><span class="toc-number">1.2.2.</span> <span class="toc-text">材料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP5306"><span class="toc-number">1.2.3.</span> <span class="toc-text">IP5306</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/68/" title="本地大模型接入QQ官方机器人"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地大模型接入QQ官方机器人"/></a><div class="content"><a class="title" href="/post/68/" title="本地大模型接入QQ官方机器人">本地大模型接入QQ官方机器人</a><time datetime="2025-01-29T15:04:10.000Z" title="发表于 2025-01-29 23:04:10">2025-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/65/" title="AI 换脸工具——FaceFusion"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 换脸工具——FaceFusion"/></a><div class="content"><a class="title" href="/post/65/" title="AI 换脸工具——FaceFusion">AI 换脸工具——FaceFusion</a><time datetime="2025-01-10T11:24:17.000Z" title="发表于 2025-01-10 19:24:17">2025-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/64/" title="本地部署大模型知识库"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地部署大模型知识库"/></a><div class="content"><a class="title" href="/post/64/" title="本地部署大模型知识库">本地部署大模型知识库</a><time datetime="2025-01-05T08:20:24.000Z" title="发表于 2025-01-05 16:20:24">2025-01-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/67/" title="DIY1"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DIY1"/></a><div class="content"><a class="title" href="/post/67/" title="DIY1">DIY1</a><time datetime="2025-01-02T12:19:11.000Z" title="发表于 2025-01-02 20:19:11">2025-01-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/63/" title="Jellyfin 播放卡顿 bug"><img src="/img/num/2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jellyfin 播放卡顿 bug"/></a><div class="content"><a class="title" href="/post/63/" title="Jellyfin 播放卡顿 bug">Jellyfin 播放卡顿 bug</a><time datetime="2024-12-31T15:38:32.000Z" title="发表于 2024-12-31 23:38:32">2024-12-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
