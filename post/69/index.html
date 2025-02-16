@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>fail2ban + 陷阱端口 | Star</title><meta name="keywords" content="云服务器"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="云服务器安全防护查了一下 ssh 登录信息,才发现好像这台服务器没开防护，以前用的 fail2ban，选择重新装一次，记录一下，查资料的时候看到了陷阱端口感觉很不错，也顺便实践一下。   查看登录信息查看btmp信息   1lastb -n 10 | tac 查看攻击者ip和攻击次数 1lastb | awk &amp;#x27;&amp;#123; print $3&amp;#125;&amp;#x27; | sort | u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fail2ban + 陷阱端口">
+<meta property="og:url" content="http://wzx046.github.io/post/69/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="云服务器安全防护查了一下 ssh 登录信息,才发现好像这台服务器没开防护，以前用的 fail2ban，选择重新装一次，记录一下，查资料的时候看到了陷阱端口感觉很不错，也顺便实践一下。   查看登录信息查看btmp信息   1lastb -n 10 | tac 查看攻击者ip和攻击次数 1lastb | awk &amp;#x27;&amp;#123; print $3&amp;#125;&amp;#x27; | sort | u">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/7.jpg">
+<meta property="article:published_time" content="2025-02-06T08:02:01.000Z">
+<meta property="article:modified_time" content="2025-02-16T15:41:55.921Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="云服务器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/7.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/69/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'fail2ban + 陷阱端口',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-16 23:41:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">70</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">fail2ban + 陷阱端口</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-06T08:02:01.000Z" title="发表于 2025-02-06 16:02:01">2025-02-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-16T15:41:55.921Z" title="更新于 2025-02-16 23:41:55">2025-02-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%90%9E%E6%9C%BA/">搞机</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="fail2ban + 陷阱端口"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="云服务器安全防护"><a href="#云服务器安全防护" class="headerlink" title="云服务器安全防护"></a>云服务器安全防护</h1><p>查了一下 ssh 登录信息,才发现好像这台服务器没开防护，以前用的 fail2ban，选择重新装一次，记录一下，查资料的时候看到了陷阱端口感觉很不错，也顺便实践一下。  </p>
+<h2 id="查看登录信息"><a href="#查看登录信息" class="headerlink" title="查看登录信息"></a>查看登录信息</h2><p>查看btmp信息  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lastb -n 10 | tac</span><br></pre></td></tr></table></figure>
+<p>查看攻击者ip和攻击次数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lastb | awk &#x27;&#123; print $3&#125;&#x27; | sort | uniq -c | sort -n</span><br></pre></td></tr></table></figure>
+<p>发现攻击次数挺少的，最多的也才382次。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">次数  ip</span><br><span class="line">105 164.90.163.90</span><br><span class="line">169 209.38.83.0</span><br><span class="line">182 123.59.28.66</span><br><span class="line">197 47.114.2.5</span><br><span class="line">222 106.75.227.179</span><br><span class="line">272 161.35.19.147</span><br><span class="line">382 112.46.234.115</span><br></pre></td></tr></table></figure>
+<p>查看尝试登陆的用户名,最多的还是 root</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lastb | awk &#x27;&#123; print $1&#125;&#x27; | sort | uniq -c | sort -n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">22 test1</span><br><span class="line">23 server</span><br><span class="line">24 es</span><br><span class="line">34 git</span><br><span class="line">39 guest</span><br><span class="line">42 dev</span><br><span class="line">50 test</span><br><span class="line">53 user</span><br><span class="line">64 ubuntu</span><br><span class="line">72 admin</span><br><span class="line">1221 root</span><br></pre></td></tr></table></figure>
+<h2 id="查看被扫描的端口及扫描者IP"><a href="#查看被扫描的端口及扫描者IP" class="headerlink" title="查看被扫描的端口及扫描者IP"></a>查看被扫描的端口及扫描者IP</h2><p>下面的命令能够后台监控tcp连接，并保存文件到<code>syn.scan</code>中，使用<code>jobs</code>命令可以查看此任务，使用<code>tail syn.scan</code>可以查看文件信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup tcpdump -n &quot;tcp[tcpflags] == tcp-syn&quot; 2&gt;&amp;1 &gt; syn.scan &amp;</span><br></pre></td></tr></table></figure>
+<p>查看被扫描的端口及其排名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F &#x27;[ .:]&#x27; &#x27;&#123;print $16&#125;&#x27; syn.scan | sort | uniq -c | sort -n</span><br></pre></td></tr></table></figure>
+<p>查看扫描者IP及扫描次数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F &#x27;[ .]&#x27; &#x27;&#123;print $4&quot;.&quot;$5&quot;.&quot;$6&quot;.&quot;$7&#125;&#x27; syn.scan | sort | uniq -c |sort -n</span><br></pre></td></tr></table></figure>
+<h2 id="fail2ban-安全防护"><a href="#fail2ban-安全防护" class="headerlink" title="fail2ban 安全防护"></a>fail2ban 安全防护</h2><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fail2ban</span><br></pre></td></tr></table></figure>
+<p>启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start fail2ban</span><br></pre></td></tr></table></figure>
+<p>开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable fail2ban</span><br></pre></td></tr></table></figure>
+<p>查看状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status fail2ban</span><br></pre></td></tr></table></figure>
+<p>创建本地配置文件副本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local</span><br></pre></td></tr></table></figure>
+<p>编辑副本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/fail2ban/jail.local</span><br></pre></td></tr></table></figure>
+<p>重启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart fail2ban</span><br></pre></td></tr></table></figure>
+<p>配置ssh防暴力破解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /etc/fail2ban/jail.d/*</span><br><span class="line">nano /etc/fail2ban/jail.d/sshd.local</span><br></pre></td></tr></table></figure>
+<p>然后复制以下内容粘贴进去，<code>ctrl+x</code>保存退出然后重启服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[sshd]</span><br><span class="line"></span><br><span class="line">enabled = true</span><br><span class="line">mode = normal</span><br><span class="line">backend = systemd</span><br></pre></td></tr></table></figure>
+<p>查看封锁列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fail2ban-client status</span><br></pre></td></tr></table></figure>
+<p>查看SSH封锁情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fail2ban-client status sshd</span><br></pre></td></tr></table></figure>
+<h2 id="陷阱端口"><a href="#陷阱端口" class="headerlink" title="陷阱端口"></a>陷阱端口</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>开放陷阱端口就是开放大量无意义的端口，让攻击者难以分辨哪些是真实服务。这并不能完全防止端口扫描，但可以干扰攻击者，增加其识别真实服务的难度。<br>陷阱端口应随机分布在非默认端口范围内，避免集中在某个区域；不要使用常见服务端口（如80、443、22等）作为陷阱端口；确保陷阱端口与真实服务端口不冲突。<br>这里设置的陷阱端口一旦被访问，直接将访问ip加入30分钟的黑名单，期间内不能访问所有端口。  </p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>安装iptables-persistent</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install iptables-persistent</span><br></pre></td></tr></table></figure>
+<p>创建自定义链</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -N TRAP_BLACKLIST</span><br></pre></td></tr></table></figure>
+<p>iptables 只能加入 15 个端口，这里使用 ipset 工具管理端口集合，突破 15 个端口的限制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install ipset</span><br></pre></td></tr></table></figure>
+<p>创建端口集合（支持 TCP 和 UDP）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipset create trap_ports bitmap:port range 1-65535</span><br><span class="line">ipset add trap_ports tcp:2222    # 例如添加 TCP 端口 2222</span><br><span class="line">ipset add trap_ports tcp:4444    # 例如添加 TCP 端口 4444</span><br></pre></td></tr></table></figure>
+<p>绑定 iptables 规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -m set --match-set trap_ports dst -j TRAP_BLACKLIST</span><br></pre></td></tr></table></figure>
+<p>保存配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipset save trap_ports -f /etc/iptables/trap_ports.set</span><br></pre></td></tr></table></figure>
+<p>验证配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipset list trap_ports</span><br></pre></td></tr></table></figure>
+<p>添加规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 如果IP已在列表且30分钟内，刷新时间并丢弃</span><br><span class="line">iptables -A TRAP_BLACKLIST -m recent --name trap_ports --update --seconds 1800 -j DROP</span><br><span class="line"># 首次访问的IP加入列表并丢弃</span><br><span class="line">iptables -A TRAP_BLACKLIST -m recent --name trap_ports --set -j DROP</span><br><span class="line"># 在 INPUT 链最前面插入规则：若 IP 在黑名单中，直接 DROP</span><br><span class="line">iptables -I INPUT -m recent --name trap_ports --update --seconds 1800 -j DROP</span><br></pre></td></tr></table></figure>
+<p>保存规则（重要！）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netfilter-persistent save</span><br></pre></td></tr></table></figure>
+<p>检查规则是否生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -v -n</span><br></pre></td></tr></table></figure>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>调整黑名单容量（编辑后重启生效）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;options ipt_recent ip_list_tot=200&quot; | sudo tee /etc/modprobe.d/iptables-recent.conf</span><br></pre></td></tr></table></figure>
+<p>查看当前黑名单IP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /proc/net/xt_recent/trap_ports</span><br></pre></td></tr></table></figure>
+<p>检查 ipset 集合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ipset list trap_ports</span><br></pre></td></tr></table></figure>
+<p>记得开放陷阱端口对应的服务器安全组规则配置。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv18718158/?jump_opus=1">端口扫描</a><br><a target="_blank" rel="noopener" href="https://blog.kejilion.pro/fail2ban/">使用Fail2Ban 保护云服务器和网站安全 </a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/69/">http://wzx046.github.io/post/69/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">云服务器</a></div><div class="post_share"><div class="social-share" data-image="/img/num/7.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/68/"><img class="next-cover" src="/img/num/6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">本地大模型接入QQ官方机器人</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/61/" title="SSH端口转发远程访问 Stable Diffusion"><img class="cover" src="/img/num/10.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-24</div><div class="title">SSH端口转发远程访问 Stable Diffusion</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">70</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">1.</span> <span class="toc-text">云服务器安全防护</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%99%BB%E5%BD%95%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">查看登录信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%A2%AB%E6%89%AB%E6%8F%8F%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%8A%E6%89%AB%E6%8F%8F%E8%80%85IP"><span class="toc-number">1.2.</span> <span class="toc-text">查看被扫描的端口及扫描者IP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fail2ban-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">1.3.</span> <span class="toc-text">fail2ban 安全防护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%B7%E9%98%B1%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.4.</span> <span class="toc-text">陷阱端口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">1.4.3.</span> <span class="toc-text">其它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.5.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/69/" title="fail2ban + 陷阱端口"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fail2ban + 陷阱端口"/></a><div class="content"><a class="title" href="/post/69/" title="fail2ban + 陷阱端口">fail2ban + 陷阱端口</a><time datetime="2025-02-06T08:02:01.000Z" title="发表于 2025-02-06 16:02:01">2025-02-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/68/" title="本地大模型接入QQ官方机器人"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地大模型接入QQ官方机器人"/></a><div class="content"><a class="title" href="/post/68/" title="本地大模型接入QQ官方机器人">本地大模型接入QQ官方机器人</a><time datetime="2025-01-29T15:04:10.000Z" title="发表于 2025-01-29 23:04:10">2025-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/65/" title="AI 换脸工具——FaceFusion"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 换脸工具——FaceFusion"/></a><div class="content"><a class="title" href="/post/65/" title="AI 换脸工具——FaceFusion">AI 换脸工具——FaceFusion</a><time datetime="2025-01-10T11:24:17.000Z" title="发表于 2025-01-10 19:24:17">2025-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/64/" title="本地部署大模型知识库"><img src="/img/num/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地部署大模型知识库"/></a><div class="content"><a class="title" href="/post/64/" title="本地部署大模型知识库">本地部署大模型知识库</a><time datetime="2025-01-05T08:20:24.000Z" title="发表于 2025-01-05 16:20:24">2025-01-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/67/" title="PJXLXD"><img src="/img/num/5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PJXLXD"/></a><div class="content"><a class="title" href="/post/67/" title="PJXLXD">PJXLXD</a><time datetime="2025-01-02T12:19:11.000Z" title="发表于 2025-01-02 20:19:11">2025-01-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
