@@ -1,0 +1,436 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>esp32s3 开发指北 | Star</title><meta name="keywords" content="esp32s3"><meta name="author" content="Star"><meta name="copyright" content="Star"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="esp32s3 开发指北(持续更新)切换目标芯片：Ctrl + Shift + P 调出命令面板，选择 ESP-IDF: Device Configuration，再选择 Device Target，再选择具体的芯片。    引脚注意事项启动配置项芯片在上电或硬件复位时，可以通过Strapping管脚和eFuse位配置如下启动参数，无需微处理器的参与：  芯片启动模式 Strapping 管脚：G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="esp32s3 开发指北">
+<meta property="og:url" content="http://wzx046.github.io/post/71/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="esp32s3 开发指北(持续更新)切换目标芯片：Ctrl + Shift + P 调出命令面板，选择 ESP-IDF: Device Configuration，再选择 Device Target，再选择具体的芯片。    引脚注意事项启动配置项芯片在上电或硬件复位时，可以通过Strapping管脚和eFuse位配置如下启动参数，无需微处理器的参与：  芯片启动模式 Strapping 管脚：G">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzx046.github.io/img/num/9.jpg">
+<meta property="article:published_time" content="2025-02-21T10:07:00.000Z">
+<meta property="article:modified_time" content="2025-02-21T13:49:46.726Z">
+<meta property="article:author" content="Star">
+<meta property="article:tag" content="esp32s3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzx046.github.io/img/num/9.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wzx046.github.io/post/71/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'esp32s3 开发指北',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-21 21:49:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/archive.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Star</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">esp32s3 开发指北</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-21T10:07:00.000Z" title="发表于 2025-02-21 18:07:00">2025-02-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-21T13:49:46.726Z" title="更新于 2025-02-21 21:49:46">2025-02-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/esp32s3/">esp32s3</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="esp32s3 开发指北"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="esp32s3-开发指北-持续更新"><a href="#esp32s3-开发指北-持续更新" class="headerlink" title="esp32s3 开发指北(持续更新)"></a>esp32s3 开发指北(<del>持续更新</del>)</h1><p>切换目标芯片：Ctrl + Shift + P 调出命令面板，选择 ESP-IDF: Device Configuration，再选择 Device Target，再选择具体的芯片。  </p>
+<hr>
+<h2 id="引脚注意事项"><a href="#引脚注意事项" class="headerlink" title="引脚注意事项"></a>引脚注意事项</h2><h3 id="启动配置项"><a href="#启动配置项" class="headerlink" title="启动配置项"></a>启动配置项</h3><p>芯片在上电或硬件复位时，可以通过<code>Strapping</code>管脚和<code>eFuse</code>位配置如下启动参数，无需微处理器的参与：</p>
+<ul>
+<li>芯片启动模式<ul>
+<li>Strapping 管脚：GPIO0 和 GPIO46</li>
+</ul>
+</li>
+<li>VDD_SPI 电压<ul>
+<li>Strapping 管脚：GPIO45</li>
+</ul>
+</li>
+<li>ROM日志打印<ul>
+<li>Strapping 管脚：GPIO46</li>
+</ul>
+</li>
+<li>JTAG 信号源<ul>
+<li>Strapping 管脚：GPIO3</li>
+</ul>
+</li>
+</ul>
+<p>Strapping 管脚的默认配置</p>
+<table>
+<thead>
+<tr>
+<th>Strapping 管脚</th>
+<th>默认配置</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPIO0</td>
+<td>弱上拉</td>
+<td>1</td>
+</tr>
+<tr>
+<td>GPIO3</td>
+<td>浮空</td>
+<td>-</td>
+</tr>
+<tr>
+<td>GPIO45</td>
+<td>弱下拉</td>
+<td>0</td>
+</tr>
+<tr>
+<td>GPIO46</td>
+<td>弱下拉</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="芯片启动模式控制"><a href="#芯片启动模式控制" class="headerlink" title="芯片启动模式控制"></a>芯片启动模式控制</h3><p>复位释放后，<code>GPIO0</code>和<code>GPIO46</code>共同决定启动模式。  </p>
+<table>
+<thead>
+<tr>
+<th>启动模式</th>
+<th>GPIO0</th>
+<th>GPIO46</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SPI Boot</td>
+<td>1</td>
+<td>任意值</td>
+</tr>
+<tr>
+<td>Joint Download Boot</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>在 SPI Boot 模式下，ROM 引导加载程序通过从 SPI flash 中读取程序来启动系统。  </li>
+<li>在 Joint Download Boot 模式下，用户可通过 USB 或 UART0 接口将二进制文件下载至 flash，或将二进制文件下载至 SRAM 并运行 SRAM 中的程序。<ul>
+<li>USB Download Boot：<ul>
+<li>USB-Serial-JTAG Download Boot</li>
+<li>USB-OTG Download Boot</li>
+</ul>
+</li>
+<li>UART Download Boot</li>
+</ul>
+</li>
+</ul>
+<h3 id="Flash-x2F-PSRAM"><a href="#Flash-x2F-PSRAM" class="headerlink" title="Flash &#x2F; PSRAM"></a>Flash &#x2F; PSRAM</h3><p>为了优化模组性能，最好将 Flash 和 PSRAM 的 SPI 速率设置为一致，这样分时访问这两个存储设备时，就不必切换时钟频率了。鉴于 PSRAM 的 SPI 速率最高可设置为 80MHz，因此将 Flash 的 SPI 速率也设置为 80MHz，以确保最佳性能。</p>
+<table>
+    <tr> <!-- 第1行数据 -->
+        <th bgcolor=#A0A0A0 style="vertical-align:middle" rowspan="2"> 管脚序号 </th> <!-- 合并2行 -->
+        <th bgcolor=#808080 style="vertical-align:middle" rowspan="2"> 管脚名称 </th> <!-- 合并2行 -->
+        <th bgcolor=#A0A0A0 style="text-align:center" colspan="2"> 单线SPI </th> <!-- 合并2列 -->
+        <th bgcolor=#808080 style="text-align:center" colspan="2"> 双线SPI </th> <!-- 合并2列 -->
+        <th bgcolor=#A0A0A0 style="text-align:center" colspan="2"> 四线SPI </th> <!-- 合并2列 -->
+        <th bgcolor=#808080 style="text-align:center" colspan="2"> 八线SPI </th> <!-- 合并2列 -->
+    </tr>
+    <tr> <!-- 第2行数据 -->
+        <td bgcolor=#A0A0A0 style="text-align:center">Flash</td>
+        <td bgcolor=#A0A0A0 style="text-align:center">PSRAM</td>
+        <td bgcolor=#808080 style="text-align:center">Flash</td>
+        <td bgcolor=#808080 style="text-align:center">PSRAM</td>
+        <td bgcolor=#A0A0A0 style="text-align:center">Flash</td>
+        <td bgcolor=#A0A0A0 style="text-align:center">PSRAM</td>
+        <td bgcolor=#808080 style="text-align:center">Flash</td>
+        <td bgcolor=#808080 style="text-align:center">PSRAM</td>
+    </tr>
+    <tr>
+        <td>33</td><td bgcolor=#FF0000>SPICLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td><td style="text-align:center">CLK</td>
+    </tr>
+    <tr>
+        <td>32</td><td bgcolor=#FF0000>SPICS0</td><td style="text-align:center"> CS#</td><td></td><td style="text-align:center"> CS#</td><td></td><td style="text-align:center"> CS#</td><td></td><td style="text-align:center"> CS#</td><td></td>
+    </tr>
+    <tr>
+        <td>28</td><td bgcolor=#FF0000>SPICS1</td><td></td><td style="text-align:center"> CE#</td><td></td><td style="text-align:center"> CE#</td><td></td><td style="text-align:center"> CE#</td><td></td><td style="text-align:center"> CE#</td>
+    </tr>
+    <tr>
+        <td>35</td><td bgcolor=#FF0000>SPID</td><td style="text-align:center">DI</td><td style="text-align:center">SI/SIO0</td><td style="text-align:center">DI</td><td style="text-align:center">SI/SIO0</td><td style="text-align:center">DI</td><td style="text-align:center">SI/SIO0</td><td style="text-align:center">DQ0</td><td style="text-align:center">DQ0</td>
+    </tr>
+        <td>34</td><td bgcolor=#FF0000>SPIQ</td><td style="text-align:center">DO</td><td style="text-align:center">SO/SIO1</td><td style="text-align:center">DO</td><td style="text-align:center">SO/SIO1</td><td style="text-align:center">DO</td><td style="text-align:center">SO/SIO1</td><td style="text-align:center">DQ1</td><td style="text-align:center">DQ1</td>
+    <tr>
+    </tr>
+        <td>31</td><td bgcolor=#FF0000>SPIWP</td><td style="text-align:center">WP#</td>
+        <td style="text-align:center">SIO2</td><td style="text-align:center">WP#</td>
+        <td style="text-align:center">SIO2</td><td style="text-align:center">WP#</td>
+        <td style="text-align:center">SIO2</td><td style="text-align:center">DQ2</td><td style="text-align:center">DQ2</td>
+    <tr>
+        <td>30</td><td bgcolor=#FF0000>SPIHD</td><td style="text-align:center">HOLD#</td>
+        <td style="text-align:center">SIO3</td><td style="text-align:center">HOLD#</td><td style="text-align:center">SIO3</td>
+        <td style="text-align:center">HOLD#</td><td style="text-align:center">SIO3</td><td style="text-align:center">DQ3</td><td style="text-align:center">DQ3</td>
+    </tr>
+        <td>38</td><td bgcolor=#FFFF00>GPIO33</td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center"> DQ4</td><td style="text-align:center"> DQ4</td>
+    <tr>
+    </tr>
+        <td>39</td><td bgcolor=#FFFF00>GPIO34</td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center"> DQ5</td><td style="text-align:center"> DQ5</td>
+    <tr>
+    </tr>
+        <td>40</td><td bgcolor=#FFFF00>GPIO35</td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center"> DQ6</td><td style="text-align:center"> DQ6</td>
+    <tr>
+    </tr>
+        <td>41</td><td bgcolor=#FFFF00>GPIO36</td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center"> DQ7</td><td style="text-align:center"> DQ7</td>
+    <tr>
+    </tr>
+        <td>42</td><td bgcolor=#FFFF00>GPIO37</td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center"> DQS/DM</td><td style="text-align:center"> DQS/DM</td>
+    <tr>
+</table>
+
+<ul>
+<li><code>CS0</code> 用于封装内 <code>flash</code></li>
+<li><code>CS1</code> 用于封装内 <code>PSRAM</code></li>
+</ul>
+<blockquote>
+<p>  <font color=red>！！！注意 ！！！</font><br>    <font color=red>红色高亮引脚</font> 用于与封装内 Flash &#x2F; PSRAM 通讯，不建议作其他用途。<br>    <font color=yellow>黄色高亮引脚</font> 工作在八线 SPI 模式下不建议使用，其余情况无限制。</p>
+</blockquote>
+<h3 id="SPI-×-4"><a href="#SPI-×-4" class="headerlink" title="SPI × 4"></a>SPI × 4</h3><p>ESP32-S3 具有以下 SPI 接口：</p>
+<ul>
+<li>SPI0&#x2F;1，供 ESP32-S3 和加密 DMA (EDMA) 访问封装内或封装外 Flash&#x2F;PSRAM <ul>
+<li>引脚：详见上一节 <a href="#flash--psram">Flash &#x2F; PSRAM</a></li>
+</ul>
+</li>
+<li>SPI2，通用 SPI 控制器，具有单独的 DMA 通道 <ul>
+<li>引脚：可通过 GPIO 交换矩阵连接任意 IO 管脚<table>
+<thead>
+<tr>
+<th>管脚序号</th>
+<th>管脚名称</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>14</td>
+<td>GPIO9</td>
+<td>FSPIHD</td>
+</tr>
+<tr>
+<td>15</td>
+<td>GPIO10</td>
+<td>FSPICS0</td>
+</tr>
+<tr>
+<td>16</td>
+<td>GPIO11</td>
+<td>FSPID</td>
+</tr>
+<tr>
+<td>17</td>
+<td>GPIO12</td>
+<td>FSPICLK</td>
+</tr>
+<tr>
+<td>18</td>
+<td>GPIO13</td>
+<td>FSPIQ</td>
+</tr>
+<tr>
+<td>19</td>
+<td>GPIO14</td>
+<td>FSPIWP</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li>SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道<ul>
+<li>引脚：可通过 GPIO 交换矩阵连接任意 IO 管脚</li>
+</ul>
+</li>
+</ul>
+<h3 id="UART-×-3"><a href="#UART-×-3" class="headerlink" title="UART × 3"></a>UART × 3</h3><p>ESP32-S3 有三个 UART（通用异步收发器）控制器，即 UART0、UART1、UART2，支持异步通信（RS232 和 RS485）和 IrDA，通信速率可达到 5 Mbps。<br>下面是ESP32-S3 UART的默认引脚。  </p>
+<table>
+<thead>
+<tr>
+<th>功能&#x2F;引脚</th>
+<th>UART0</th>
+<th>UART1</th>
+<th>UART2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发送（TX）</td>
+<td>GPIO43</td>
+<td>GPIO17 &#x2F; 任意IO</td>
+<td>任意IO</td>
+</tr>
+<tr>
+<td>接收（RX）</td>
+<td>GPIO44</td>
+<td>GPIO18 &#x2F; 任意IO</td>
+<td>任意IO</td>
+</tr>
+</tbody></table>
+<h3 id="IIC-×-2"><a href="#IIC-×-2" class="headerlink" title="IIC × 2"></a>IIC × 2</h3><p>ESP32-S3 有两个 IIC 总线接口，根据用户的配置，总线接口可以用作 IIC 主机或从机模式。<br>IIC 总线分软件和硬件对象，通过配置可以在<strong>任意引脚</strong>上实现 IIC 功能。  </p>
+<h3 id="I2S-×-2"><a href="#I2S-×-2" class="headerlink" title="I2S × 2"></a>I2S × 2</h3><p>ESP32-S3 有两个标准 I2S 接口，可以以主机或从机模式，在全双工或半双工模式下工作，并且可被配置为 I2S 串行 8&#x2F;16&#x2F;24&#x2F;32 位的收发数据模式，支持频率从 10 kHz 到 40 MHz 的 BCK 时钟。 I2S 接口有专用的 DMA 控制器。<strong>任意引脚</strong>都可以配置为 I2S。  </p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://lingshunlab.com/book/esp32/esp32-s3-pin-reference">ESP32-S3 引脚参考大全 </a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzx046.github.io">Star</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzx046.github.io/post/71/">http://wzx046.github.io/post/71/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzx046.github.io" target="_blank">Star</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/esp32s3/">esp32s3</a></div><div class="post_share"><div class="social-share" data-image="/img/num/9.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/70/"><img class="next-cover" src="/img/num/8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">cygwin + autossh</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Star</div><div class="author-info__description">摸鱼ing</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/wzx046"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欸嘿~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#esp32s3-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8C%97-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">1.</span> <span class="toc-text">esp32s3 开发指北(持续更新)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%84%9A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.1.</span> <span class="toc-text">引脚注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE%E9%A1%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">启动配置项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%AF%E7%89%87%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">芯片启动模式控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flash-x2F-PSRAM"><span class="toc-number">1.1.3.</span> <span class="toc-text">Flash &#x2F; PSRAM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI-%C3%97-4"><span class="toc-number">1.1.4.</span> <span class="toc-text">SPI × 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UART-%C3%97-3"><span class="toc-number">1.1.5.</span> <span class="toc-text">UART × 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIC-%C3%97-2"><span class="toc-number">1.1.6.</span> <span class="toc-text">IIC × 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2S-%C3%97-2"><span class="toc-number">1.1.7.</span> <span class="toc-text">I2S × 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.2.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/71/" title="esp32s3 开发指北"><img src="/img/num/9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32s3 开发指北"/></a><div class="content"><a class="title" href="/post/71/" title="esp32s3 开发指北">esp32s3 开发指北</a><time datetime="2025-02-21T10:07:00.000Z" title="发表于 2025-02-21 18:07:00">2025-02-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/70/" title="cygwin + autossh"><img src="/img/num/8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cygwin + autossh"/></a><div class="content"><a class="title" href="/post/70/" title="cygwin + autossh">cygwin + autossh</a><time datetime="2025-02-17T02:11:30.000Z" title="发表于 2025-02-17 10:11:30">2025-02-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/69/" title="fail2ban + 陷阱端口"><img src="/img/num/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fail2ban + 陷阱端口"/></a><div class="content"><a class="title" href="/post/69/" title="fail2ban + 陷阱端口">fail2ban + 陷阱端口</a><time datetime="2025-02-06T08:02:01.000Z" title="发表于 2025-02-06 16:02:01">2025-02-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/68/" title="本地大模型接入QQ官方机器人"><img src="/img/num/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="本地大模型接入QQ官方机器人"/></a><div class="content"><a class="title" href="/post/68/" title="本地大模型接入QQ官方机器人">本地大模型接入QQ官方机器人</a><time datetime="2025-01-29T15:04:10.000Z" title="发表于 2025-01-29 23:04:10">2025-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/65/" title="AI 换脸工具——FaceFusion"><img src="/img/num/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 换脸工具——FaceFusion"/></a><div class="content"><a class="title" href="/post/65/" title="AI 换脸工具——FaceFusion">AI 换脸工具——FaceFusion</a><time datetime="2025-01-10T11:24:17.000Z" title="发表于 2025-01-10 19:24:17">2025-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Star</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
